@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-layouts.app>
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
@@ -24,22 +22,25 @@
           {{ $post->content }}
         </div>
 
-        <!-- Divider -->
-        <hr class="my-6 border-gray-200">
+        @can('manage-post', $post)
+          <!-- Divider -->
+          <hr class="my-6 border-gray-200">
 
-        <!-- Action Buttons -->
-        <div class="flex space-x-4">
-          <x-form-button :text="'Edit Post'" :icon="'edit'" variant="primary"
-            onclick="window.location.href='{{ route('posts.edit', $post) }}'" />
+          <!-- Action Buttons -->
+          <div class="flex space-x-4">
+            <x-form-button :text="'Edit Post'" :icon="'edit'" variant="primary"
+              onclick="window.location.href='/posts/{{ $post->id }}/edit'" />
 
-          <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <x-form-button :text="'Delete Post'" :icon="'trash'" variant="danger" type="submit"
-              onclick="return confirm('Are you sure you want to delete this post?')" />
-          </form>
-        </div>
+            <form action="/posts/{{ $post->id }}" method="POST" class="inline">
+              @csrf
+              @method('DELETE')
+              <x-form-button :text="'Delete Post'" :icon="'trash'" variant="danger" type="submit"
+                onclick="return confirm('Are you sure you want to delete this post?')" />
+            </form>
+          </div>
+        @endcan
       </div>
     </div>
   </div>
-@endsection
+
+</x-layouts.app>

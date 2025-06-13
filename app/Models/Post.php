@@ -11,7 +11,7 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
 
-    protected $guard = [];
+    protected $guarded = [];
 
     public function user(): BelongsTo
     {

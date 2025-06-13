@@ -25,13 +25,16 @@
           </div>
 
           <!-- User Details Form -->
-          <div class="space-y-4">
+          <form action="/profile" method="POST" class="space-y-4">
+            @csrf
+            @method('PATCH')
+
             <div class="relative">
               <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <div class="flex items-center bg-[var(--background)] px-4 py-2 rounded-md">
                 <i data-lucide="user" class="w-5 h-5 text-gray-400 mr-2"></i>
-                <input type="text" value="{{ auth()->user()->name }}"
-                  class="bg-transparent w-full focus:outline-none" readonly>
+                <input type="text" name="name" value="{{ auth()->user()->name }}"
+                  class="bg-transparent w-full focus:outline-none">
               </div>
             </div>
 
@@ -39,26 +42,35 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <div class="flex items-center bg-[var(--background)] px-4 py-2 rounded-md">
                 <i data-lucide="mail" class="w-5 h-5 text-gray-400 mr-2"></i>
-                <input type="email" value="{{ auth()->user()->email }}"
-                  class="bg-transparent w-full focus:outline-none" readonly>
+                <input type="email" name="email" value="{{ auth()->user()->email }}"
+                  class="bg-transparent w-full focus:outline-none">
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="flex space-x-4 pt-6 border-t border-gray-200">
-          <a href=""
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] rounded-md transition-colors duration-200">
-            <i data-lucide="edit" class="w-4 h-4 mr-2"></i>
-            Edit Profile
-          </a>
+            <div class="relative">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <div class="flex items-center bg-[var(--background)] px-4 py-2 rounded-md">
+                <i data-lucide="lock" class="w-5 h-5 text-gray-400 mr-2"></i>
+                <input type="password" name="password" placeholder="Leave blank to keep current password"
+                  class="bg-transparent w-full focus:outline-none">
+              </div>
+            </div>
 
-          <button type="button" onclick="confirmDelete()"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-200 cursor-pointer">
-            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
-            Delete Account
-          </button>
+            <!-- Action Buttons -->
+            <div class="flex space-x-4 pt-6 border-t border-gray-200">
+              <button type="submit"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] rounded-md transition-colors duration-200">
+                <i data-lucide="edit" class="w-4 h-4 mr-2"></i>
+                Update Profile
+              </button>
+
+              <button type="button" onclick="confirmDelete()"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-200 cursor-pointer">
+                <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+                Delete Account
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -71,20 +83,21 @@
     <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 relative z-10">
       <h3 class="text-lg font-bold text-gray-900 mb-4">Delete Account</h3>
       <p class="text-gray-600 mb-6">Are you sure you want to delete your account? This action cannot be undone.</p>
-      <div class="flex space-x-4">
-        <form action="" method="POST" class="inline">
-          @csrf
-          @method('DELETE')
+      <form action="/profile" method="POST" class="space-y-4">
+        @csrf
+        @method('DELETE')
+
+        <div class="flex space-x-4">
           <button type="submit"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-200 cursor-pointer">
             Confirm Delete
           </button>
-        </form>
-        <button type="button" onclick="closeDeleteModal()"
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors duration-200 cursor-pointer">
-          Cancel
-        </button>
-      </div>
+          <button type="button" onclick="closeDeleteModal()"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors duration-200 cursor-pointer">
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
