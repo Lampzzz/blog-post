@@ -2,31 +2,38 @@
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-        <!-- Title -->
         <h1 class="text-3xl font-bold text-primary-600 mb-4">{{ $post->title }}</h1>
 
-        <!-- Author and Date -->
         <div class="flex items-center text-gray-600 text-sm mb-6">
-          <span class="mr-4">
-            <i class="fas fa-user mr-2"></i>
-            {{ $post->user->name }}
-          </span>
-          <span>
-            <i class="fas fa-calendar mr-2"></i>
-            {{ $post->created_at->format('M d, Y') }}
-          </span>
+          <div class="flex space-x-2">
+            <x-icon name="user-circle" />
+            <span>{{ $post->user->name }}</span>
+          </div>
+          <span class="mx-2">&middot;</span>
+          <div class="flex space-x-2">
+            <x-icon name="calendar" />
+            <span>{{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }}</span>
+          </div>
         </div>
 
-        <!-- Content -->
         <div class="prose max-w-none mb-8">
           {{ $post->content }}
         </div>
 
-        @can('manage-post', $post)
-          <!-- Divider -->
-          <hr class="my-6 border-gray-200">
+        <x-divider />
+        <div class="flex space-x-2 mb-4 items-center">
+          <i data-lucide="tags" class="w-6 h-6 text-[var(--primary)]"></i>
+          <h1 class="text-xl font-semibold">Tags:</h1>
+        </div>
 
-          <!-- Action Buttons -->
+        <div class="flex space-x-2">
+          @foreach ($post->tags as $tag)
+            <x-tags>{{ $tag }}</x-tags>
+          @endforeach
+        </div>
+
+        @can('manage-post', $post)
+          <x-divider />
           <div class="flex space-x-4">
             <x-form-button :text="'Edit Post'" :icon="'edit'" variant="primary"
               onclick="window.location.href='/posts/{{ $post->id }}/edit'" />

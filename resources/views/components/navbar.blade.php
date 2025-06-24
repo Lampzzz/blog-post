@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Vite;
           <x-nav-link href="/register" :active="request()->is('register')" text="Register" icon="user-plus" />
         @endguest
         @auth
+          <x-nav-link href="/posts/create" :active="request()->is('create')" text="Create" icon="circle-plus" />
           <x-nav-link href="/profile" :active="request()->is('profile')" text="Profile" icon="user" />
         @endauth
       </div>
